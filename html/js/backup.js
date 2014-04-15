@@ -43,6 +43,6 @@ function BackupCtrl($scope, $http)
         }).error(function()
         {
             alert("error");
-        });         
+        });
     };
 }
