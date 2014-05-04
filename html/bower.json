@@ -1,0 +1,8 @@
+{
+  "name": "BakDigestWebUI",
+  "dependencies": {
+    "angular": "latest",
+    "bootstrap": "latest",
+    "angular-ui-bootstrap": "latest"
+  }
+}

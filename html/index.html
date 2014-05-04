@@ -1,18 +1,25 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="BakDigestWebUIApp">
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <script type="text/javascript" src="lib/angularjs-1.3.0-beta.5/angular.min.js"></script>
-    <script type="text/javascript" src="js/backup.js"></script>
+    <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript"
+            src="/bower_components/angular-ui-bootstrap/dist/ui-bootstrap-tpls-0.11.0.min.js"></script>
+    <script type="text/javascript" src="/js/backup.js"></script>
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 </head>
 <body>
-    <ul ng-controller="BackupCtrl">
+<tabset>
 
-        <li ng-repeat="backup in backups">
-            {{backup.name}}
-            <button ng-click="remove(backup.id)">Delete</button>
-        </li>
+    <tab heading="Backups" ng-controller="BackupsController">
+
+        <ul>
+            <li ng-repeat="backup in backups">
+                {{backup.name}}
+                <button ng-click="remove(backup.id)">Delete</button>
+            </li>
+        </ul>
 
         <form>
             <label for="name">
@@ -26,6 +33,53 @@
 
             <button ng-click="save()">Save</button>
         </form>
-    </ul>
+    </tab>
+
+    <tab heading="Digests" ng-controller="DigestsController">
+
+        <ul>
+            <li ng-repeat="digest in digests">
+                {{digest.email}}
+                <button ng-click="remove(digest.id)">Delete</button>
+            </li>
+        </ul>
+
+        <form>
+
+            <label for="email">
+                e-mail:
+                <input id="email" type="text" ng-model="email">
+            </label>
+
+            <label for="start_date">
+                Start date:
+                <input id="start_date" type="text" ng-model="start_date">
+            </label>
+
+            <label for="periodicity">
+                Periodicity:
+                <input id="periodicity" type="text" ng-model="periodicity">
+            </label>
+
+            <label for="backups">
+                Backups:
+                <div ng-repeat="backup in backups">
+                    <input
+                            type="checkbox"
+                            name="backup_ids"
+                            value="{{backup.id}}"
+                            ng-model="backup_ids"
+                            ng-click="toggleSelection(backup.id)"
+                            > {{backup.name}}
+                </div>
+            </label>
+
+            <button ng-click="save()">Save</button>
+
+        </form>
+
+    </tab>
+
+</tabset>
 </body>
 </html>

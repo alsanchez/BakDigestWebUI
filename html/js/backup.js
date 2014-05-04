@@ -1,4 +1,6 @@
-function BackupCtrl($scope, $http)
+angular.module('BakDigestWebUIApp', ['ui.bootstrap']);
+
+function BackupsController($scope, $http, $rootScope)
 {
     var server = "http://bakdigest";
 
@@ -6,7 +8,7 @@ function BackupCtrl($scope, $http)
         $http({
             url: server + "/backup"
         }).success(function (data, status, headers, config) {
-            $scope.backups = data;
+            $rootScope.backups = data;
         }).error(function (data, status, headers, config) {
             $scope.status = status;
         });
@@ -45,4 +47,73 @@ function BackupCtrl($scope, $http)
             alert("error");
         });
     };
+}
+
+function DigestsController($scope, $http, $rootScope)
+{
+    var server = "http://bakdigest";
+
+    $scope.selection = [];
+
+    var loadDigests = function()
+    {
+        $http({
+            url: server + "/digest"
+        }).success(function(data)
+        {
+            $scope.digests = data;
+        }).error(function(data, status)
+        {
+            $scope.status = status;
+        });
+    };
+
+    $scope.toggleSelection = function(value)
+    {
+        var index = $scope.selection.indexOf(value);
+        if(index > -1)
+        {
+            $scope.selection.splice(index, 1);
+        }
+        else
+        {
+            $scope.selection.push(value);
+        }
+    };
+
+    $scope.save = function()
+    {
+        $http({
+            url: server + "/digest",
+            method: "POST",
+            data: {
+                email: $scope.email,
+                periodicity: $scope.periodicity,
+                start_date: $scope.start_date,
+                backup_ids: $scope.selection
+            }
+        }).success(function()
+        {
+            loadDigests();
+        }).error(function()
+        {
+            alert("error");
+        });
+    };
+
+    $scope.remove = function(id)
+    {
+        $http({
+            url: server + "/digest/" + id,
+            method: "DELETE"
+        }).success(function()
+        {
+            loadDigests();
+        }).error(function()
+        {
+            alert("error");
+        });
+    };
+
+    loadDigests();
 }
