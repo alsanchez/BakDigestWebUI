@@ -101,6 +101,13 @@ function DigestsController($scope, $http, $rootScope)
         });
     };
 
+    $scope.open = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.opened = true;
+    };
+
     $scope.remove = function(id)
     {
         $http({

@@ -8,6 +8,7 @@
             src="/bower_components/angular-ui-bootstrap/dist/ui-bootstrap-tpls-0.11.0.min.js"></script>
     <script type="text/javascript" src="/js/backup.js"></script>
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.min.css" />
 </head>
 <body>
 <tabset>
@@ -44,39 +45,75 @@
             </li>
         </ul>
 
-        <form>
+        <div class="row">
 
-            <label for="email">
-                e-mail:
-                <input id="email" type="text" ng-model="email">
-            </label>
+            <form role="form" class="col-xs-8 col-xs-offset-2">
 
-            <label for="start_date">
-                Start date:
-                <input id="start_date" type="text" ng-model="start_date">
-            </label>
+                <fieldset>
 
-            <label for="periodicity">
-                Periodicity:
-                <input id="periodicity" type="text" ng-model="periodicity">
-            </label>
+                    <legend>Add a new digest</legend>
 
-            <label for="backups">
-                Backups:
-                <div ng-repeat="backup in backups">
-                    <input
-                            type="checkbox"
-                            name="backup_ids"
-                            value="{{backup.id}}"
-                            ng-model="backup_ids"
-                            ng-click="toggleSelection(backup.id)"
-                            > {{backup.name}}
-                </div>
-            </label>
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input id="email" type="email" class="form-control" ng-model="email" placeholder="Enter email">
+                    </div>
 
-            <button ng-click="save()">Save</button>
+                    <div class="form-group">
+                        <label for="start_date">Start date</label>
+                        <div class="input-group">
 
-        </form>
+                            <input
+                                    id="start_date"
+                                    class="form-control"
+                                    type="text"
+                                    ng-model="start_date"
+                                    is-open="opened"
+                                    datepicker-popup="yyyy-MM-dd"
+                                    >
+
+                            <span class="input-group-btn">
+
+                                <button
+                                        type="button"
+                                        class="btn btn-default"
+                                        ng-click="open($event)">
+
+                                            <i class="fa fa-calendar"></i>
+
+                                </button>
+
+                            </span>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="periodicity">Periodicity</label>
+                        <input id="periodicity" type="number" ng-model="periodicity" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Backups</label>
+                        <div class="checkbox" ng-repeat="backup in backups">
+                            <label>
+                                <input
+                                        type="checkbox"
+                                        name="backup_ids"
+                                        value="{{backup.id}}"
+                                        ng-model="backup_ids"
+                                        ng-click="toggleSelection(backup.id)"
+                                        > {{backup.name}}
+                            </label>
+                        </div>
+                    </div>
+
+                    <button ng-click="save()" class="btn btn-default">Save</button>
+
+                </fieldset>
+
+            </form>
+
+        </div>
 
     </tab>
 
