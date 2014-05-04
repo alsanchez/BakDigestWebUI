@@ -36,6 +36,11 @@ function BackupsController($scope, $http, $rootScope)
 
     $scope.remove = function(id)
     {
+        if(!confirm("¿Do you really want to delete this backup?"))
+        {
+            return;
+        }
+
         $http({
             url: server + "/backup/" + id,
             method: "DELETE"

@@ -20,25 +20,57 @@
 
     <tab heading="Backups" ng-controller="BackupsController">
 
-        <ul>
-            <li ng-repeat="backup in backups">
-                {{backup.name}}
-                <button ng-click="remove(backup.id)">Delete</button>
-            </li>
-        </ul>
+        <div class="row col-xs-10 col-xs-offset-1">
 
-        <form>
-            <label for="name">
-                Backup name:
-                <input id="name" type="text" ng-model="name">
-            </label>
-            <label for="frequency">
-                Backup frequency:
-                <input id="frequency" type="text" ng-model="frequency">
-            </label>
+            <h2>Current backups</h2>
 
-            <button ng-click="save()">Save</button>
-        </form>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Periodicity</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="backup in backups">
+                    <td>{{$index + 1}}</td>
+                    <td>{{backup.name}}</td>
+                    <td>{{backup.frequency}}</td>
+                    <td>
+                        <button class="btn btn-danger" ng-click="remove(backup.id)">
+                            <i class="fa fa-trash-o"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h2>Add a new backup</h2>
+
+            <form role="form">
+
+                <fieldset>
+
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input id="name" type="text" ng-model="name" class="form-control" placeholder="Enter backup name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="frequency">Backup periodicity</label>
+                        <input id="frequency" type="number" ng-model="frequency" class="form-control" placeholder="Enter backup periodicity">
+                    </div>
+
+                    <button class="btn btn-primary" ng-click="save()">Save</button>
+
+                </fieldset>
+
+            </form>
+
+        </div>
+
     </tab>
 
     <tab heading="Digests" ng-controller="DigestsController">
@@ -68,6 +100,7 @@
                         <div ng-repeat="backup in digest.backups">
                             {{backup.name}}
                         </div>
+                    </td>
                     <td>
                         <button class="btn btn-danger" ng-click="remove(digest.id)">
                             <i class="fa fa-trash-o"></i>
@@ -121,7 +154,8 @@
 
                     <div class="form-group">
                         <label for="periodicity">Periodicity</label>
-                        <input id="periodicity" type="number" ng-model="periodicity" class="form-control" placeholder="Enter the periodicity">
+                        <input id="periodicity" type="number" ng-model="periodicity" class="form-control"
+                               placeholder="Enter the periodicity">
                     </div>
 
                     <div class="form-group">
