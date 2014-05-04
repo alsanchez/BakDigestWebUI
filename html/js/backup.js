@@ -110,6 +110,11 @@ function DigestsController($scope, $http, $rootScope)
 
     $scope.remove = function(id)
     {
+        if(!confirm("¿Do you really want to delete this digest?"))
+        {
+            return;
+        }
+
         $http({
             url: server + "/digest/" + id,
             method: "DELETE"
